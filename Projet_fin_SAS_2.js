@@ -18,6 +18,14 @@ const candidats = [
         electeurs: [33, 33]
     },
     {
+        cin: "CD123456",
+        nom: "silimani",
+        prenom: "brahim",
+        partiPolitique: "Fleur",
+        age: 38,
+        electeurs: [33, 33]
+    },
+    {
         cin: "EF123456",
         nom: "Alaoui",
         prenom: "Mohammed",
@@ -38,9 +46,9 @@ const candidats = [
 
 
 
-////////////////////////////////// functions
+//////////////////////////////////////////////////////////////les functions
 
-function menuPrincipal() {
+function menuprincipal() {
     console.log("------------MENU PRINCIPAL----------------");
     console.log("- 1. Ajouter candidat                    -");
     console.log("- 2. Afficher les candidats              -");
@@ -53,17 +61,17 @@ function menuPrincipal() {
 
 }
 
-function ajouterCandidat() {
+function ajoutercandidat() {
     console.log("1. Ajouter un candidat");
     console.log("2. Ajouter plusieurs candidats  ");
     console.log("0. Venir au menu principale");
     let affinorm = prompt("====>")
     switch (affinorm) {
         case "1":
-            ajouterUnCandidat()
+            ajouteruncandidat()
             break;
         case "2":
-
+            ajouterpluseuirscandidat()
             break;
         case "0":
 
@@ -74,7 +82,28 @@ function ajouterCandidat() {
     }
 }
 
-function ajouterUnCandidat() {
+function ajouterpluseuirscandidat() {
+    nomber = Number(prompt("entrer un nomber : "))
+    for (let i = 0; i < nomber; i++) {
+        let cin = prompt("CIN: ");
+        let nom = prompt("Nom: ");
+        let prenom = prompt("Prenom: ");
+        let parti = prompt("PartiPolitique: ");
+        let age = prompt("Age: ");
+
+        const nouveaucandidat = {
+            cin: cin,
+            nom: nom,
+            prenom: prenom,
+            partipolitique: parti,
+            age: age,
+            electeurs: []
+        };
+        candidats.push(nouveaucandidat);
+    }
+}
+
+function ajouteruncandidat() {
 
     let cin = prompt("cin :")
     let nom = prompt("nom :")
@@ -97,7 +126,7 @@ function ajouterUnCandidat() {
 
 
 
-function afficherCandidats() {
+function affichercandidats() {
     console.log("1. Afichage normale");
     console.log("2. Affichage trié");
     console.log("3. Affichage par filtre");
@@ -110,6 +139,10 @@ function afficherCandidats() {
         case "2":
             affichagetrié()
             break;
+        case "3":
+            rechercherparti()
+            break;
+
         case "0":
 
             break;
@@ -157,7 +190,7 @@ function affichagetrié() {
         `);
 
     }
-    
+
 }
 
 
@@ -189,17 +222,17 @@ function voter() {
 }
 
 
-function modifierInfoCandidat() {
+function modifierinfocandidat() {
     console.log("1. Modifier nom d'un candidat ");
     console.log("2. Modifier age d'un candidat");
     console.log("0. Venir au menu principale");
     let affinorm = prompt("====>")
     switch (affinorm) {
         case "1":
-            modifierCandidatNom()
+            modifiercandidatNom()
             break;
         case "2":
-            modifierCandidatage()
+            modifiercandidatage()
             break;
         case "0":
 
@@ -211,7 +244,7 @@ function modifierInfoCandidat() {
 }
 
 
-function modifierCandidatNom() {
+function modifiercandidatNom() {
 
 
     let cincan = prompt("entrer le cin de candidat: ")
@@ -235,7 +268,7 @@ function modifierCandidatNom() {
     }
 
 }
-function modifierCandidatage() {
+function modifiercandidatage() {
 
 
     let cincan = prompt("entrer le cin de candidat: ")
@@ -260,7 +293,7 @@ function modifierCandidatage() {
 
 }
 
-function supprimerCandidat() {
+function supprimercandidat() {
     let cinderecherch = prompt("cin de candidat :")
     let trouve = false
     for (let i = 0; i < candidats.length; i++) {
@@ -278,7 +311,7 @@ function supprimerCandidat() {
 }
 
 
-function rechercherCandidat() {
+function recherchercandidat() {
     let cinrecherche = prompt(" Entrer cin de votre candidat : ")
     let trouve = false
     for (let i = 0; i < candidats.length; i++) {
@@ -300,6 +333,31 @@ function rechercherCandidat() {
     }
 }
 
+function rechercherparti() {
+
+    let parti = prompt("le nom de parti")
+    const particandida = []
+    for (let i = 0; i < candidats.length; i++) {
+        if (candidats[i].partiPolitique.toUpperCase() == parti.toUpperCase()) {
+            particandida.push(candidats[i])
+        }
+    }
+    
+
+    for (let i = 0; i < particandida.length; i++) {
+        console.log(`
+        # Candidats de ${parti}:
+         CIN: ${particandida[i].cin}
+         Nom: ${particandida[i].nom}
+         prenom: ${particandida[i].prenom}
+         partiPolitique: ${particandida[i].partiPolitique}
+         age: ${particandida[i].age}
+         electeurs: ${particandida[i].electeurs.length}
+         -------------
+        `);
+
+    }
+}
 
 
 
@@ -307,22 +365,25 @@ function rechercherCandidat() {
 
 
 
-////////////////////////////////// main
+
+
+
+//////////////////////////////////////////////////////main
 
 while (true) {
 
-    menuPrincipal()
+    menuprincipal()
 
     const choix = prompt("Votre choix : ");
 
     switch (choix) {
 
         case "1":
-            ajouterCandidat();
+            ajoutercandidat();
             break;
 
         case "2":
-            afficherCandidats()
+            affichercandidats()
             prompt()
             break;
 
@@ -331,15 +392,15 @@ while (true) {
             break;
 
         case "4":
-            modifierInfoCandidat()
+            modifierinfocandidat()
             break;
 
         case "5":
-            supprimerCandidat()
+            supprimercandidat()
             break;
 
         case "6":
-            rechercherCandidat()
+            recherchercandidat()
             break;
 
         case "0":
@@ -354,7 +415,5 @@ while (true) {
         break;
     }
 }
-
-
 
 
